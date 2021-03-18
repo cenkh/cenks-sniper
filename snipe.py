@@ -176,10 +176,10 @@ class Account:
         self.password = password
         self.questions = questions
         self.got_name = False
-        self.user_agent = ""
+        self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0"
         self.failed_auth = False
         self.authenticate_json = {"username": self.email, "password": self.password}
-        self.headers = {""}
+        self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0", "Content-Type": "application/json"}
 
     async def authenticate(self, session, sleep_time, block_snipe):
         await asyncio.sleep(sleep_time)
