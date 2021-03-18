@@ -1,11 +1,7 @@
 already_setup
-config.json
+ayarlar.json
 .vscode
 build
-accounts.txt
+hesaplar.txt
 __pycache__
-venv
-.idea
-alternate-accs.txt
-webhook.txt
-success.txt
+başarılı.txt
