@@ -1,9 +1,0 @@
-zamanlama_sistemi:namemc
-skin: https://namemc.com/skin (Þeklinde girin!)
-skin_modeli:slim (Skinin þeklini belirler) 
-change_skin:kapalý
-snipe_denemeleri:3
-block_denemeleri:3
-doðrulama_gecikmesi:800
-maximum_hesap:30
-auto_link_namemc:kapalý
