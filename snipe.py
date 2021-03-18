@@ -43,13 +43,14 @@ def custom_info(message):
 
 def print_title():
     title = f"""
-     {Fore.YELLOW}░█████╗░███████╗███╗░░██╗██╗░░██╗
-     {Fore.YELLOW}██╔══██╗██╔════╝████╗░██║██║░██╔╝
-     {Fore.YELLOW}██║░░╚═╝█████╗░░██╔██╗██║█████═╝░
-     {Fore.YELLOW}██║░░██╗██╔══╝░░██║╚████║██╔═██╗░
-     {Fore.YELLOW}╚█████╔╝███████╗██║░╚███║██║░╚██╗
+     {Fore.MAGENTA}░█████╗░███████╗███╗░░██╗██╗░░██╗
+     {Fore.MAGENTA}██╔══██╗██╔════╝████╗░██║██║░██╔╝
+     {Fore.MAGENTA}██║░░╚═╝█████╗░░██╔██╗██║█████═╝░
+     {Fore.MAGENTA}██║░░██╗██╔══╝░░██║╚████║██╔═██╗░
+     {Fore.MAGENTA}╚█████╔╝███████╗██║░╚███║██║░╚██╗
          
-   {Fore.GREEN} cenk#1337 tarafından tasarlandı."""
+   {Fore.YELLOW} cenk#1337 tarafından tasarlandı.
+   """
     print(title)
 
 
@@ -97,9 +98,9 @@ async def namemc_timing(target, block_snipe):
                     custom_info(f" ~{round(wait_time / 60)} Dakika içinde snipeliyorum")
                 else:
                     custom_info(f" {wait_time} Saniye içinde snipeliyorum!")
-                custom_info(f"{wait_time} dakika içinde snipeliyorum!")
+                custom_info(f"{wait_time} Dakika içinde snipeliyorum!")
                 return int(snipe_time.replace(tzinfo=timezone.utc).timestamp())
-            print(f"hata.")
+            print(f"Hata.")
             quit()
 
         wait_time = snipe_time - now
@@ -175,14 +176,13 @@ class Account:
         self.password = password
         self.questions = questions
         self.got_name = False
-        self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0"
+        self.user_agent = ""
         self.failed_auth = False
         self.authenticate_json = {"username": self.email, "password": self.password}
-        self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0", "Content-Type": "application/json"}
+        self.headers = {""}
 
     async def authenticate(self, session, sleep_time, block_snipe):
         await asyncio.sleep(sleep_time)
-        # custom_info(f"{Fore.WHITE}starting auth for {self.email}")
         debug_mode = False
         async with session.post("https://authserver.mojang.com/authenticate", json=self.authenticate_json, headers=self.headers) as r:
             if check_resp(r.status):
@@ -194,7 +194,7 @@ class Account:
                         print(resp_json)
                     else:
                         if block_snipe == 2:
-                            custom_info(f"{self.email} Premium bir hesap değil snipeleyemiyorum. {Fore.RED}Sen Snipeliyorsun. Bu Başarısız Olacak.{Fore.RESET}")
+                            custom_info(f"{self.email} Premium bir hesap değil snipeleyemiyorum. {Fore.RED} Bu Başarısız Olacak.{Fore.RESET}")
                 self.auth = {"Authorization": "Bearer: " + resp_json["accessToken"]}
                 self.access_token = resp_json["accessToken"]
             else:
@@ -210,7 +210,7 @@ class Account:
                         ncjson = await ncE.json()
                         try:
                             if ncjson['nameChangeAllowed'] is False:
-                                logging.info(f"{Fore.WHITE}[{Fore.RED}HATA{Fore.WHITE}] {self.email} is not eligible for a name change!")
+                                logging.info(f"{Fore.WHITE}[{Fore.RED}HATA{Fore.WHITE}] {self.email} İsim değiştirmek için erken!")
                                 self.failed_auth = True
                             else:
                                 logging.info(f"{Fore.WHITE}[{Fore.GREEN}BAŞARILI{Fore.WHITE}] {self.email} Hesabına başarıyla girildi!")
@@ -243,7 +243,7 @@ class Account:
                 sent_reqs += 1
                 await response.read()
                 if response.status == 204 or response.status == 200:
-                    logging.info(f"{Fore.WHITE}[{Fore.GREEN}BAŞARILI{Fore.WHITE}] | Sniped {Fore.CYAN}{target_username}{Fore.WHITE} on {self.email} | {Fore.GREEN}{response.status}{Fore.WHITE} @ {Fore.CYAN}{now}{Fore.RESET}")
+                    logging.info(f"{Fore.WHITE}[{Fore.GREEN}BAŞARILI{Fore.WHITE}] | {Fore.CYAN}{target_username}{Fore.WHITE} {self.email}'da snipeledim | {Fore.GREEN}{response.status}{Fore.WHITE} @ {Fore.CYAN}{now}{Fore.RESET}")
                     self.got_name = True
                     if config.change_skin:
                         await self.authenticate(session, 1, 1)
@@ -294,7 +294,7 @@ def load_accounts_file():
             input("Hesapları yenilemek için herhangi bir tuşa bas.")
             load_accounts_file()
         if len(accounts) > config.max_accs:
-            print(f"{Fore.WHITE}[{Fore.YELLOW}HATA{Fore.WHITE}]{Fore.RESET} bir sürü hesap ekledin | {len(accounts) - config.max_accs} hesaplarını siliyorum!")
+            print(f"{Fore.WHITE}[{Fore.YELLOW}HATA{Fore.WHITE}]{Fore.RESET} limitten fazla hesap ekledin | {len(accounts) - config.max_accs} hesaplarını siliyorum!")
             accounts = accounts[0:30]
     return accounts
 
